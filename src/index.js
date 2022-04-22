@@ -29,12 +29,14 @@ let galleryLightBox = new SimpleLightbox('.gallery a', options.simpleLightBox);
 function dataProcessing(data) {
   searchButton.disabled = false;
   if (data.data.totalHits === 0) {
+    loadMoreBtn.hide();
     return Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.',
     );
   }
   if (data.data.totalHits !== 0 && data.data.hits.length === 0) {
-    searchButton.disabled = true;
+    //searchButton.disabled = true;
+    loadMoreBtn.hide();
     return Notify.warning(`We're sorry, but you've reached the end of search results.`);
   }
 
@@ -56,10 +58,13 @@ function dataProcessing(data) {
 async function loadPictures() {
   try {
     const response = await apiService.getPictures();
+    const showBtn =  loadMoreBtn.show();
     const process = await dataProcessing(response);
-    const showBtn = await loadMoreBtn.show();
+    
+    //searchButton.classList.remove('is-hidden');
     return process;
   } catch (error) {
+    //const showBtn = await loadMoreBtn.hide();
     console.log(error);
     Notify.failure('Something went wrong, please try again...');
   }
@@ -68,14 +73,16 @@ async function loadPictures() {
 function onFormSubmit(event) {
   event.preventDefault();
 
-  const isFilled = event.currentTarget.elements.searchQuery.value;
+  const isFilled = event.currentTarget.elements.searchQuery.value.trim();
   if (isFilled) {
-    searchButton.disabled = true;
+    //searchButton.classList.add('is-hidden');
     apiService.searchQuery = isFilled;
     apiService.resetPage();
     gallery.innerHTML = '';
     loadPictures();
   } else {
+    //searchButton.classList.remove('is-hidden');
+    //const showBtn =  loadMoreBtn.hide();
     return Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.',
     );
