@@ -28,9 +28,10 @@ input {
 button[type='submit'] {
   margin-left: 10px;
   padding: 10px;
-  border: 1px solid rgb(10, 10, 10);
-  border-radius: 50px;
-  background-color: rgba(255, 0, 0, 0.932);
+  border: none;
+  width: 100px;
+  background-color:blue;
+  color: white;
 }
 
 .is-hidden{
@@ -44,9 +45,9 @@ button[type='button'].is-hidden {
   height: 40px;
   display: block;
   position: relative;
-  border: 1px solid rgb(10, 10, 10);
-  border-radius: 50px;
-  background-color: rgb(53, 252, 63);
+  border: none;
+    background-color:blue;
+    width: 100px;
   margin: 30px auto;
   padding: 10px;
 }
